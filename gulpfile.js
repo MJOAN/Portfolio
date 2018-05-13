@@ -58,6 +58,9 @@ gulp.task('css:compile', function() {
     .pipe(sass.sync({
       outputStyle: 'expanded'
     }).on('error', sass.logError))
+    .pipe(header(banner, {
+      pkg: pkg
+    }))
     .pipe(gulp.dest('./css'))
 });
 
@@ -88,10 +91,12 @@ gulp.task('js:minify', function() {
     .pipe(rename({
       suffix: '.min'
     }))
+    .pipe(header(banner, {
+      pkg: pkg
+    }))
     .pipe(gulp.dest('./js'))
     .pipe(browserSync.stream());
 });
-
 // JS
 gulp.task('js', ['js:minify']);
 
@@ -115,5 +120,4 @@ gulp.task('dev', ['css', 'js', 'browserSync'], function() {
   gulp.watch('./scss/*.scss', ['css']);
   gulp.watch('./js/*.js', ['js']);
   gulp.watch('./*.html', browserSync.reload);
-  //gulp.watch('js/**/*.js', browserSync.reload);
 });
