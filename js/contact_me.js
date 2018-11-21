@@ -22,9 +22,11 @@ $(function() {
       $this = $("#sendMessageButton");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
       $.ajax({
-        url: "././mail/contact_me.php",
+        url: "https://formkeep.com/f/55047257c9ce",
         type: "POST",
-        dataType: "json",
+        accept: {
+          javascript: "application/javascript"
+        },
         data: {
           name: name,
           phone: phone,
