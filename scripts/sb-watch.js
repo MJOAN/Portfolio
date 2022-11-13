@@ -41,10 +41,6 @@ function _processFile(filePath, watchEvent) {
 
     console.log(`### INFO: File event: ${watchEvent}: ${filePath}`);
 
-    if (filePath.match(/\.pug$/)) {
-        return _handlePug(filePath, watchEvent);
-    }
-
     if (filePath.match(/\.scss$/)) {
         if (watchEvent === 'change') {
             return _handleSCSS(filePath, watchEvent);
@@ -56,29 +52,7 @@ function _processFile(filePath, watchEvent) {
         return renderScripts();
     }
 
-    if (filePath.match(/src\/assets\//)) {
-        return renderAssets();
-    }
 
-}
-
-function _handlePug(filePath, watchEvent) {
-    if (watchEvent === 'change') {
-        if (filePath.match(/includes/) || filePath.match(/mixins/) || filePath.match(/\/pug\/layouts\//)) {
-            return _renderAllPug();
-        }
-        return renderPug(filePath);
-    }
-    if (!filePath.match(/includes/) && !filePath.match(/mixins/) && !filePath.match(/\/pug\/layouts\//)) {
-        return renderPug(filePath);
-    }
-}
-
-function _renderAllPug() {
-    console.log('### INFO: Rendering All');
-    _.each(allPugFiles, (value, filePath) => {
-        renderPug(filePath);
-    });
 }
 
 function _handleSCSS() {

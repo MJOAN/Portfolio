@@ -4,7 +4,7 @@
     "version": "7.0.11",
     "description": "Start Bootstrap Agency Template - Mariam Joan Portfolio",
     "scripts": {
-        "build": "npm run build:scss && npm run build:scripts && npm run build:assets",
+        "build": "npm run build:scss && npm run build:scripts",
         "build:assets": "node scripts/build-assets.js",
         "build:scripts": "node scripts/build-scripts.js",
         "build:scss": "node scripts/build-scss.js",
