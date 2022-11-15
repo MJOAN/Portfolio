@@ -44,9 +44,6 @@
         "postcss": "^8.4.19",
         "startbootstrap-agency": "^7.0.11",
         "tailwindcss": "^3.2.4", 
-        "upath": "^2.0.1"
-    },
-    "devDependencies": {
         "browser-sync": "2.27.9",
         "chokidar": "3.5.3",
         "concurrently": "6.3.0",
@@ -55,5 +52,6 @@
         "sass": "1.49.9",
         "shelljs": "0.8.5",
         "upath": "^2.0.1"
-    }
+    },
+    "devDependencies": {}
 }
