@@ -8,7 +8,7 @@ concurrently([
     { 
         command: `"${browserSyncPath}" --reload-delay 2000 --reload-debounce 2000 dist -w --no-online --port $PORT`,
         open: false,
-        port: process.env.PORT || 5000,
+        port: process.env.PORT || 5000, // key prior was heroku R10 error
         name: 'SB_BROWSER_SYNC', 
         prefixColor: 'bgGreen.bold',
     }
