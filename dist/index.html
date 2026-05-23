@@ -33,6 +33,109 @@
       
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <!-- AOS - Animate on Scroll -->
+        <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+        <style>
+            /* ===== Portfolio Filters ===== */
+            .portfolio-filters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .portfolio-filters .filter-btn {
+                padding: 0.5rem 1.25rem;
+                border: 2px solid var(--bs-primary);
+                background: transparent;
+                color: #333;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 600;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .portfolio-filters .filter-btn:hover,
+            .portfolio-filters .filter-btn.active {
+                background: var(--bs-primary);
+                color: #fff;
+            }
+            .portfolio-item-wrapper {
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+            .portfolio-item-wrapper.hidden {
+                opacity: 0;
+                transform: scale(0.8);
+                position: absolute !important;
+                pointer-events: none;
+                height: 0;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+            }
+
+            /* ===== Skill Bars ===== */
+            .skills-list {
+                max-width: 960px;
+                margin: 2.5rem auto 0;
+            }
+            .skill-row {
+                margin-bottom: 1.5rem;
+            }
+            .skill-row-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+                letter-spacing: 1px;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+            .skill-row-header .skill-label i {
+                color: var(--bs-primary);
+                margin-right: 0.6rem;
+                font-size: 1.1rem;
+                width: 1.4rem;
+                text-align: center;
+            }
+            .skill-row-header .skill-percent {
+                color: #666;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+            .skill-bar {
+                height: 10px;
+                background: #e9ecef;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+            .skill-bar-fill {
+                height: 100%;
+                background: linear-gradient(90deg, var(--bs-primary), #ffd24d);
+                border-radius: 5px;
+                width: 0;
+                transition: width 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+
+            /* ===== Masthead gradient overlay ===== */
+            header.masthead::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 120px;
+                background: linear-gradient(transparent, rgba(0,0,0,0.3));
+                pointer-events: none;
+            }
+        </style>
     </head>
 
 
@@ -52,7 +155,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">Skills</a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
@@ -67,54 +170,95 @@
         <!-- Masthead-->
         <header class="masthead">
             <div class="container">
-                <div class="masthead-subheading">Welcome to My Portfolio!</div>
-                <div class="masthead-heading text-uppercase">It's Great To Meet You</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+                <div class="masthead-subheading" data-aos="fade-down" data-aos-duration="800">Welcome to My Portfolio!</div>
+                <div class="masthead-heading text-uppercase" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">It's Great To Meet You</div>
+                <br>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#services" data-aos="fade-up" data-aos-delay="400">Tell Me More</a>
             </div>
         </header>
 
 
 
-        <!-- Services-->
+        <!-- Services / Skills -->
         <section class="page-section" id="services">
             <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Services</h2>
-                    <h3 class="section-subheading text-muted">Let's discuss how I can bring value to your business!</h3>
+                <div class="text-center" data-aos="fade-up">
+                    <h2 class="section-heading text-uppercase">Skills &amp; Services</h2>
+                    <h3 class="section-subheading text-muted">
+                        Years of experience across full stack web development and data science have shaped how I solve business problems &mdash; through deep investigation, rigorous analytics, and approaches proven over time.
+                    </h3>
                 </div>
 
-
-                <div class="row text-center">
-                    
-                    <div class="col-md-12">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-                        </span>
-
-                        <h4 class="my-3">Analytics Engineering</h4>
-                        <p class="text-muted">
-                            With a background in full stack web development and data science, 
-                            I'm capable of producing results that can help to solve your business problems through analytics, visualization, and or machine learning.
-                             The core tools of my work include Python, SQL, Spark, Jupyter, and Javascript. I'm a dedicated partner.
-                             I will work with you and your team to identify root causes and provide high quality solutions!     
+                <div class="skills-list" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row gx-5">
+                        <div class="col-md-6">
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fab fa-python"></i>Python</span>
+                                    <span class="skill-percent">95%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="95%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fas fa-database"></i>SQL</span>
+                                    <span class="skill-percent">95%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="95%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fas fa-fire"></i>PySpark</span>
+                                    <span class="skill-percent">90%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="90%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fas fa-brain"></i>ML / AI</span>
+                                    <span class="skill-percent">80%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="80%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fas fa-chart-line"></i>Plotly</span>
+                                    <span class="skill-percent">80%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="80%"></div></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fab fa-js-square"></i>JavaScript</span>
+                                    <span class="skill-percent">85%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="85%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fab fa-node-js"></i>Node.js</span>
+                                    <span class="skill-percent">80%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="80%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fab fa-react"></i>React</span>
+                                    <span class="skill-percent">75%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="75%"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-row-header">
+                                    <span class="skill-label"><i class="fab fa-aws"></i>AWS</span>
+                                    <span class="skill-percent">75%</span>
+                                </div>
+                                <div class="skill-bar"><div class="skill-bar-fill" data-level="75%"></div></div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Responsive Design</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Web Security</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div> -->
                 </div>
             </div>
         </section>
@@ -122,17 +266,7 @@
 
 
 
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
+    <!-- ========================================== -->
 
 
 
@@ -141,17 +275,25 @@
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
                 
-                <div class="text-center">
+                <div class="text-center" data-aos="fade-up">
                     <h2 class="section-heading text-uppercase">Portfolio</h2>
                     <h3 class="section-subheading text-muted">
-                        These are applications I built throughout my journey of becoming a developer and now analytics engineer, 
-                        along with projects I'm currently working on!</h3>
+                        These are applications I built throughout my journey of becoming a developer and now analytics engineer,
+                        along with projects I'm currently working on!
                     </h3>
                 </div>
 
-                <div class="row">
+                <div class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="web">Web Apps</button>
+                    <button class="filter-btn" data-filter="data">Data Science</button>
+                    <button class="filter-btn" data-filter="api">APIs</button>
+                    <button class="filter-btn" data-filter="game">Games</button>
+                </div>
 
-                    <div class="col-md-4 col-sm-6 ">
+                <div class="row" id="portfolio-grid">
+
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="0">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
                             <div class="portfolio-hover">
@@ -170,7 +312,7 @@
                     </div>
               
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="api" data-aos="fade-up" data-aos-delay="100">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
                                 <div class="portfolio-hover">
@@ -187,8 +329,8 @@
                       </div>
               
 
-                    <div class="col-md-4 col-sm-6">
-                        <div class="portfolio-item"> 
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="game" data-aos="fade-up" data-aos-delay="200">
+                        <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
@@ -200,10 +342,10 @@
                                 <h4>Star Wars Game</h4>
                                 <p class="text-muted">JS and JQuery logic</p>
                             </div>
-                        </div>  
+                        </div>
                     </div>
               
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="0">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
                                 <div class="portfolio-hover">
@@ -216,11 +358,11 @@
                                 <h4>Friend Finder</h4>
                                 <p class="text-muted">HTML and JS Survey to find a friend!</p>
                             </div>
-                        </div>  
+                        </div>
                     </div>
               
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="100">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
                                 <div class="portfolio-hover">
@@ -238,7 +380,7 @@
 
 
             
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="200">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
                                 <div class="portfolio-hover">
@@ -248,14 +390,14 @@
                                 alt="">
                             </a>
                             <div class="portfolio-caption">
-                            <h4>Mongo New York Times Scraper </h4>
+                            <h4>Mongo New York Times Scraper</h4>
                             <p class="text-muted">Cheerio, MongoDB, Node, and Handlebars</p>
                             </div>
                         </div>
                     </div>
               
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="game" data-aos="fade-up" data-aos-delay="0">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal7">
                                 <div class="portfolio-hover">
@@ -271,13 +413,13 @@
                         </div>
                     </div>
               
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="100">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal8">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img" style="display: block; margin-left: auto; margin-right: auto;" src="assets/img/portfolio/08-thumbnail.png"
+                                <img class="img-fluid" style="display: block; margin-left: auto; margin-right: auto;" src="assets/img/portfolio/08-thumbnail.png"
                                 alt="">
                             </a>
                             <div class="portfolio-caption">
@@ -288,7 +430,7 @@
                     </div>
               
                     
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="200">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal9">
                                 <div class="portfolio-hover">
@@ -298,15 +440,15 @@
                                 alt="">
                             </a>
                             <div class="portfolio-caption">
-                                <h4>TODO: Achieve Greatness! </h4>
+                                <h4>TODO: Achieve Greatness!</h4>
                                 <p class="text-muted">MySQL and CRUD!</p>
                             </div>
-                        </div>  
+                        </div>
                     </div>
               
                 
                     
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="0">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal10">
                                 <div class="portfolio-hover">
@@ -324,7 +466,7 @@
               
 
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="web" data-aos="fade-up" data-aos-delay="100">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal11">
                                 <div class="portfolio-hover">
@@ -342,7 +484,7 @@
 
 
               
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="api" data-aos="fade-up" data-aos-delay="200">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal12">
                                 <div class="portfolio-hover">
@@ -360,7 +502,7 @@
 
 
                         
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="data" data-aos="fade-up" data-aos-delay="0">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal13">
                                 <div class="portfolio-hover">
@@ -378,7 +520,7 @@
 
 
               
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="data" data-aos="fade-up" data-aos-delay="100">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal14">
                                     <div class="portfolio-hover">
@@ -388,26 +530,26 @@
                                 alt="">
                             </a>
                             <div class="portfolio-caption">
-                                <h4>Data Analysis Projects! </h4>
+                                <h4>Data Analysis Projects!</h4>
                                 <p class="text-muted">Udacity DA Nanodegree! Python, Pandas, Jupyter Notebooks, seaborn and matplotlib!</p>
                             </div>
                         </div>
                     </div>
               
 
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 portfolio-item-wrapper" data-category="data" data-aos="fade-up" data-aos-delay="200">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal15">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" style="display: block; margin-left: auto; margin-right: auto;" src="" alt="">
+                                <img class="img-fluid" style="display: block; margin-left: auto; margin-right: auto;" src="assets/img/portfolio/dsa_guide.png" alt="Machine Learning with Tensorflow">
                             </a>
                             <div class="portfolio-caption">
                                 <h4>Machine Learning with Tensorflow</h4>
                                 <p class="text-muted">Udacity ML Nanodegree! Regression, SVM, Tensorflow, KMeans and much more!</p>
                             </div>
-                        </div>  
+                        </div>
                     </div>
 
 
@@ -417,17 +559,7 @@
         </section>
 
 
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
+    <!-- ========================================== -->
 
 
 
@@ -440,7 +572,7 @@
             <div class="container">
             <div class="row">   
                 <div class="col-lg-12 text-center">
-                <h2 class="section-heading text-uppercase">Technical Blog</h2>
+                <h2 class="section-heading text-uppercase" data-aos="fade-up">Technical Blog</h2>
                     <div class="section-subheading text-muted">
                        <i>I'll be writing about my work and the times in which an enormous amount of troubleshooting and debugging pays off! 
                         I want to share my findings here with you!
@@ -457,7 +589,7 @@
                             <br>
                             <!-- Post preview-->
                             <div class="post-preview">
-                                <a href="blog_posts/post_20221112.html"><h4 class="post-title">How to Use PySpark createOrReplaceTempView()'s!</h4></a>
+                                <h4 class="post-title">How to Use PySpark createOrReplaceTempView()'s!</h4>
                                 <div class="post-subtitle text-muted">We will review how you can query large datasets using this helpful function!</div>
                             </div>
 
@@ -466,7 +598,7 @@
                             <hr class="my-4" />
                             <!-- Post preview-->
                             <div class="post-preview">
-                                <a href="blog_posts/post_20221112.html"><h4 class="post-title">  Visualizations to Determine Correlation!</h4></a>
+                                <h4 class="post-title">Visualizations to Determine Correlation!</h4>
                             </div>
 
 
@@ -474,7 +606,7 @@
                             <hr class="my-4" />
                             <!-- Post preview-->
                             <div class="post-preview">
-                                <a href="blog_posts/post_20221112.html"><h4 class="post-title">Building a Histogram in Trino!</h4></a>
+                                <h4 class="post-title">Building a Histogram in Trino!</h4>
                                 <div class="post-subtitle text-muted">We'll take a look at Trino's (formerly Presto) histogram function to support data analysis in SQL.</div>
                             </div>
 
@@ -483,10 +615,10 @@
                             <hr class="my-4" />
                             <!-- Post preview-->
                             <div class="post-preview">
-                                <a href="blog_posts/post_20221112.html"><h4 class="post-title">The Great Bayesian Average!</h4></a>
+                                <h4 class="post-title">The Great Bayesian Average!</h4>
                                 <div class="post-subtitle text-muted">We'll walk through how we can utilize this averaging technique to synthesize multiple metrics to one aggregate score!</div>
-                                
-                
+
+
                             </div>
                             <!-- Divider-->
                             <hr class="my-4" />
@@ -503,17 +635,7 @@
 
 
 
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
+    <!-- ========================================== -->
 
 
 
@@ -522,7 +644,7 @@
         <section class="page-section" id="about">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">About</h2>
+                    <h2 class="section-heading text-uppercase" data-aos="fade-up">About</h2>
                     <h3 class="section-subheading text-muted">A brief bio below and links to important resources here:
                         <li> <a href="https://www.linkedin.com/in/mariamjoan"> LinkedIn </a> </li>
                         <li> <a href="https://github.com/MJOAN"> Github </a> </li> 
@@ -598,7 +720,7 @@
                         <div class="timeline-panel">
                             <div class="timeline-heading">
                                 <h4>January 2021 to August 2022</h4>
-                                <h4 class="subheading">Computer Science Master to Analytics Engineer</h4>
+                                <h4 class="subheading">Computer Science Master's to Analytics Engineer</h4>
                             </div>
                             <div class="timeline-body"><p class="text-muted">
                                 <p> In early 2021, I applied to Loyola Marymount University and was accepted to their Computer Science Masters program which I began in the Fall of 2021, 
@@ -649,17 +771,7 @@
         </section>
 
 
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
+    <!-- ========================================== -->
 
 
         <!-- Team-->
@@ -730,17 +842,7 @@
 
 
 
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
+    <!-- ========================================== -->
 
 
 
@@ -748,8 +850,8 @@
         <section class="page-section" id="contact">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Contact Us</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase" data-aos="fade-up">Contact Me</h2>
+                    <h3 class="section-subheading text-muted" data-aos="fade-up" data-aos-delay="100">Have a question or want to work together? Send me a message!</h3>
                 </div>
                 <!-- * * * * * * * * * * * * * * *-->
                 <!-- * * SB Forms Contact Form * *-->
@@ -823,7 +925,7 @@
                 <div class="row align-items-center">
                     
                     <div class="col-md-4 text-lg-start">
-                        <span class="copyright">Copyright &copy; 2023, Blackrock Digital LLC.
+                        <span class="copyright">Copyright &copy; 2025, Blackrock Digital LLC.
                             <a href="https://github.com/BlackrockDigital/startbootstrap-agency/blob/gh-pages/LICENSE">
                             <br>Code under MIT license</a>
                             <br>Edited by Mariam Joan
@@ -845,17 +947,7 @@
         </footer>
         
         
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
-    <!-- ########################################################################## -->
+    <!-- ========================================== -->
 
 
     <!-- Portfolio Modals-->
@@ -1603,5 +1695,59 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+        <!-- AOS - Animate on Scroll -->
+        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        <script>
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 80
+            });
+
+            // ===== Animate skill bars on scroll =====
+            (function() {
+                const bars = document.querySelectorAll('.skill-bar-fill');
+                if (!bars.length || !('IntersectionObserver' in window)) {
+                    bars.forEach(function(b) { b.style.width = b.getAttribute('data-level'); });
+                    return;
+                }
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.style.width = entry.target.getAttribute('data-level');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.25 });
+                bars.forEach(function(b) { observer.observe(b); });
+            })();
+
+            // ===== Portfolio Filtering =====
+            (function() {
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                const items = document.querySelectorAll('.portfolio-item-wrapper');
+
+                filterBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        // Update active button
+                        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+                        btn.classList.add('active');
+
+                        const filter = btn.getAttribute('data-filter');
+
+                        items.forEach(function(item) {
+                            if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                                item.classList.remove('hidden');
+                            } else {
+                                item.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
+            })();
+        </script>
     </body>
 </html>
